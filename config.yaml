@@ -10,5 +10,5 @@ livePreviewConfiguration:
   setupCommand: ":"
   serveCommand: npm run studio
 
-# authentication:
-#   policyName: knowledge-base
+authentication:
+  policyName: knowledge-base
