@@ -13,36 +13,28 @@ import {
 import { isProduction } from "@yext/pages/util";
 import "../index.css";
 import Favicon from "../assets/images/yext-favicon.ico";
+import About from "../components/About";
 import Banner from "../components/Banner";
+import Carousel from "../components/Carousel";
+import Hours from "../components/Hours";
 import PageLayout from "../components/PageLayout";
-import BoardCard from "../components/search/BoardCard";
-import {
-  SearchBar,
-  StandardCard,
-  VerticalResults,
-  SpellCheck,
-  ResultsCount,
-  Pagination,
-  UniversalResults
-} from "@yext/search-ui-react";
-import {
-  SearchHeadlessProvider,
-  provideHeadless,
-} from "@yext/search-headless-react";
+import Schema from "../components/Schema";
+import ContactSection from "../components/ContactSection";
 // End of Imports --------------------------
 
 export const config: TemplateConfig = {
   stream: {
-    $id: "Boards",
+    $id: "Cards",
     filter: {
-      entityTypes: ["ce_board"],
+      entityTypes: ["ce_card"],
     },
     fields: [
       "id",
       "uid",
       "meta",
       "name",
-      "slug"
+      "slug",
+      "c_file"
     ],
     localization: {
       locales: ["en"],
@@ -91,24 +83,15 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   };
 };
 
-const Board: Template<TemplateRenderProps> = ({
+const Card: Template<TemplateRenderProps> = ({
   __meta,
   relativePrefixToRoot,
   document,
 }) => {
   const {
     name,
+    c_file
   } = document;
-
-  // const data = { mainPhone, emails, logo, c_backgroundColor };
-
-  const searcher = provideHeadless({
-    apiKey: YEXT_PUBLIC_SEARCH_API_KEY,
-    experienceKey: "knowledge-base",
-    locale: "en",
-    headlessId: "cards",
-    verticalKey: "cards"
-  });
 
   return (
     <>
@@ -116,35 +99,13 @@ const Board: Template<TemplateRenderProps> = ({
       <PageLayout templateData={{ __meta, document }}>
         <Banner name={name}  />
         <div className="centered-container">
-          <div className="flex space-x-5">
-            <a href="/index.html" className="font-semibold hover:underline">Home</a>
-            <div className="space-x-2">
-              <span>&#8594;</span>
-              <span>{name}</span>
-            </div>
-          </div>
-          <SearchHeadlessProvider searcher={searcher}>
-            <div className="px-4 py-8">
-              <div className="mx-auto flex max-w-5xl flex-col">
-                <SearchBar 
-                  placeholder="search for knowledge cards"
-                />
-                <SpellCheck />
-                <ResultsCount />
-                <VerticalResults
-                  CardComponent={BoardCard}
-                  customCssClasses={{
-                    verticalResultsContainer: "space-y-3",
-                  }}
-                />
-              </div>
-              <Pagination />
-            </div>
-          </SearchHeadlessProvider>
+            <section>
+            {c_file && <iframe src={c_file.url} className="w-full h-screen"></iframe>}
+            </section>
         </div>
       </PageLayout>
     </>
   );
 };
 
-export default Board;
+export default Card;

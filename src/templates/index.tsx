@@ -1,3 +1,4 @@
+// Start of Imports --------------------------
 import * as React from "react";
 import {
   GetHeadConfig,
@@ -10,16 +11,29 @@ import {
   TemplateRenderProps,
   TransformProps,
 } from "@yext/pages";
-import { isProduction } from "@yext/pages/util";
 import "../index.css";
 import Favicon from "../assets/images/yext-favicon.ico";
-import About from "../components/About";
 import Banner from "../components/Banner";
-import Carousel from "../components/Carousel";
-import Hours from "../components/Hours";
 import PageLayout from "../components/PageLayout";
-import Schema from "../components/Schema";
-import ContactSection from "../components/ContactSection";
+import BoardCard from "../components/search/BoardCard";
+
+// Search Imports
+import {
+  SearchBar,
+  StandardCard,
+  VerticalResults,
+  SpellCheck,
+  ResultsCount,
+  Pagination,
+  UniversalResults
+} from "@yext/search-ui-react";
+import {
+  SearchHeadlessProvider,
+  provideHeadless,
+} from "@yext/search-headless-react";
+import Board from "./boards";
+// End of Imports --------------------------
+
 
 export const config: TemplateConfig = {
   name: "index.html"
@@ -65,17 +79,40 @@ const Index: Template<TemplateRenderProps> = ({
 //   const {} = document;
 
 
+  const searcher = provideHeadless({
+    apiKey: YEXT_PUBLIC_SEARCH_API_KEY,
+    experienceKey: "knowledge-base",
+    locale: "en",
+    headlessId: "boards",
+    verticalKey: "boards"
+  });
+
 
   return (
     <>
       {/* <Schema data={document} /> */}
       <PageLayout templateData={{ __meta, document }}>
         <Banner name="Index Page" />
-        {/* <About description={description} /> */}
-        {/* {hours && <Hours title={"Hours"} hours={hours} />} */}
-        {/* <Carousel title={"Gallery"} photoGallery={photoGallery}></Carousel> */}
-        {/* <ContactSection address={address} phone={mainPhone} email={emails} /> */}
-        
+        <div className="centered-container">
+          <SearchHeadlessProvider searcher={searcher}>
+            <div className="px-4 py-8">
+              <div className="mx-auto flex max-w-5xl flex-col">
+                <SearchBar 
+                  placeholder="search for boards"
+                />
+                <SpellCheck />
+                <ResultsCount />
+                <VerticalResults
+                  CardComponent={BoardCard}
+                  customCssClasses={{
+                    verticalResultsContainer: "space-y-3",
+                  }}
+                />
+              </div>
+              <Pagination />
+            </div>
+          </SearchHeadlessProvider>
+        </div>
       </PageLayout>
     </>
   );
