@@ -19,24 +19,21 @@ const navigation = [
 
 const Header = ({ data }: HeaderProps) => {
 
-  let phone = data.mainPhone ? data.mainPhone : "+12345678910";
-  let email = data.emails?.[0] ?? "test@test.com";
+  // let phone = data.mainPhone ? data.mainPhone : "+12345678910";
+  // let email = data.emails?.[0] ?? "test@test.com";
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="" style={{background: `var(--backgroundColor)`}}>
+    <header className="">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex items-center gap-x-12">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            { data.logo ? (
-              <Image image={data.logo.image} layout="fixed" height={80} width={80} />
-              ) : (
-                <img className="h-24 w-auto rounded-md" src="https://logoipsum.com/logoipsum.png" alt="" />
-            )}
+            
+            <img className="h-24 w-auto rounded-md" src="https://thumbs.bfldr.com/at/s789nvxj59h4fv4wrqsmskxn?expiry=1710348106&fit=bounds&height=800&sig=MGY1NGM5OWI0MTZlMDdlNjNiNGY1MzJiMDQ1MWJiODIzMTFmOTZlYQ%3D%3D&width=1100" alt="" />
           </a>
-          <div className="hidden lg:flex lg:gap-x-12">
+          {/* <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
               <Link 
                 href={item.href}  
@@ -47,6 +44,9 @@ const Header = ({ data }: HeaderProps) => {
                 {item.name}
               </Link>
             ))}
+          </div> */}
+          <div className="text-3xl font-semibold">
+            Knowledge Base
           </div>
         </div>
         <div className="flex lg:hidden">
@@ -60,7 +60,7 @@ const Header = ({ data }: HeaderProps) => {
           </button>
         </div>
         <div className="hidden lg:flex justify-around space-x-8">
-          <Link
+          {/* <Link
             href={`tel:${phone}`}
             className="tracking-tight font-bold leading-6 text-gray-900 hover:text-gray-700"
             eventName={`phoneCall`}
@@ -73,7 +73,7 @@ const Header = ({ data }: HeaderProps) => {
             eventName={`email`}
           >
             {email}
-          </Link>
+          </Link> */}
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -82,11 +82,7 @@ const Header = ({ data }: HeaderProps) => {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              { data.logo ? (
-                <Image image={data.logo.image} layout="fixed" height={80} width={80} />
-                ) : (
-                  <img className="h-24 w-auto rounded-md" src="https://logoipsum.com/logoipsum.png" alt="" />
-              )}
+              <img className="h-24 w-auto rounded-md" src="https://thumbs.bfldr.com/at/s789nvxj59h4fv4wrqsmskxn?expiry=1710348106&fit=bounds&height=800&sig=MGY1NGM5OWI0MTZlMDdlNjNiNGY1MzJiMDQ1MWJiODIzMTFmOTZlYQ%3D%3D&width=1100" alt="" />
             </a>
             <button
               type="button"
@@ -99,7 +95,7 @@ const Header = ({ data }: HeaderProps) => {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
+              {/* <div className="space-y-2 py-6">
                 {navigation.map((item) => (
                   <Link 
                     href={item.href}
@@ -110,8 +106,8 @@ const Header = ({ data }: HeaderProps) => {
                     {item.name}
                   </Link>
                 ))}
-              </div>
-              <div className="py-6 space-y-4 flex flex-col">
+              </div> */}
+              {/* <div className="py-6 space-y-4 flex flex-col">
                 <Link
                   href={`tel:${phone}`}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -126,7 +122,7 @@ const Header = ({ data }: HeaderProps) => {
                 >
                   {email}
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </Dialog.Panel>

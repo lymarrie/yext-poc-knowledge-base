@@ -12,19 +12,8 @@ export interface PageLayoutProps {
 
 const PageLayout = ({ children, data, templateData }: PageLayoutProps) => {
 
-  let backgroundColor;
-
-  if (data.c_backgroundColor) {
-    const transformedColor = data.c_backgroundColor.replace(/\s+/g, '').toLowerCase();
-    backgroundColor = `--backgroundColor: ${transformedColor}`;
-  } else {
-    backgroundColor = `--backgroundColor: white`;
-  }
-
-
   return (
     <>
-      <style>:root {`{${backgroundColor}}`}</style>
       <AnalyticsProvider templateData={templateData}>
         <div className="min-h-screen" >
           <AnalyticsScopeProvider name="header">
