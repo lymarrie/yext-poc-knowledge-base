@@ -1,7 +1,10 @@
 import * as React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { AnalyticsProvider, AnalyticsScopeProvider } from "@yext/pages-components";
+import {
+  AnalyticsProvider,
+  AnalyticsScopeProvider,
+} from "@yext/pages-components";
 import { TemplateProps } from "@yext/pages";
 
 export interface PageLayoutProps {
@@ -11,13 +14,12 @@ export interface PageLayoutProps {
 }
 
 const PageLayout = ({ children, data, templateData }: PageLayoutProps) => {
-
   return (
     <>
       <AnalyticsProvider templateData={templateData}>
-        <div className="min-h-screen" >
+        <div className="min-h-screen">
           <AnalyticsScopeProvider name="header">
-            <Header data={data}/>
+            <Header data={data} />
           </AnalyticsScopeProvider>
           {children}
           <AnalyticsScopeProvider name="footer">
