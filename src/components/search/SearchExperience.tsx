@@ -19,7 +19,7 @@ const SearchExperience = () => {
   );
 
   useEffect(() => {
-    const token = window?.YEXT_TOKENS?.AUTH_SEARCH.token;
+    const token = window?.YEXT_TOKENS?.SITE_SEARCH.token;
     if (!token) {
       console.log("no token found on window");
     } else {
