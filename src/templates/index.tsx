@@ -1,5 +1,4 @@
 // Start of Imports --------------------------
-import * as React from "react";
 import {
   GetHeadConfig,
   GetPath,
@@ -9,34 +8,16 @@ import {
   TemplateConfig,
   TemplateProps,
   TemplateRenderProps,
-  TransformProps,
 } from "@yext/pages";
 import "../index.css";
 import Favicon from "../assets/images/yext-favicon.ico";
 import Banner from "../components/Banner";
 import PageLayout from "../components/PageLayout";
-import BoardCard from "../components/search/BoardCard";
-
-// Search Imports
-import {
-  SearchBar,
-  StandardCard,
-  VerticalResults,
-  SpellCheck,
-  ResultsCount,
-  Pagination,
-  UniversalResults
-} from "@yext/search-ui-react";
-import {
-  SearchHeadlessProvider,
-  provideHeadless,
-} from "@yext/search-headless-react";
-import Board from "./boards";
+import SearchExperience from "../components/search/SearchExperience";
 // End of Imports --------------------------
 
-
 export const config: TemplateConfig = {
-  name: "index.html"
+  name: "index.html",
 };
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
@@ -76,43 +57,11 @@ const Index: Template<TemplateRenderProps> = ({
   relativePrefixToRoot,
   document,
 }) => {
-//   const {} = document;
-
-
-  const searcher = provideHeadless({
-    apiKey: YEXT_PUBLIC_SEARCH_API_KEY,
-    experienceKey: "knowledge-base",
-    locale: "en",
-    headlessId: "boards",
-    verticalKey: "boards"
-  });
-
-
   return (
     <>
-      {/* <Schema data={document} /> */}
       <PageLayout templateData={{ __meta, document }}>
         <Banner name="Index Page" />
-        <div className="centered-container">
-          <SearchHeadlessProvider searcher={searcher}>
-            <div className="px-4 py-8">
-              <div className="mx-auto flex max-w-5xl flex-col">
-                <SearchBar 
-                  placeholder="search for boards"
-                />
-                <SpellCheck />
-                <ResultsCount />
-                <VerticalResults
-                  CardComponent={BoardCard}
-                  customCssClasses={{
-                    verticalResultsContainer: "space-y-3",
-                  }}
-                />
-              </div>
-              <Pagination />
-            </div>
-          </SearchHeadlessProvider>
-        </div>
+        <SearchExperience />
       </PageLayout>
     </>
   );
