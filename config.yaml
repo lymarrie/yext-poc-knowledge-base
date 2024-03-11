@@ -11,4 +11,4 @@ livePreviewConfiguration:
   serveCommand: npm run studio
 
 authentication:
-  policyName: knowledge-base
+  policyName: knowledge-base-with-token
