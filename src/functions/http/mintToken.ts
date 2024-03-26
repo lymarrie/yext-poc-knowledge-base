@@ -6,7 +6,8 @@ export default async function mintToken(
 ): Promise<SitesHttpResponse> {
   const { email = "" } = request.queryParams; // Extract email from query parameters
 
-  console.log(email);
+  console.log("Query params: ", request.queryParams);
+  console.log("Email: ", email);
 
   const secret = YEXT_API_KEY_SECRET;
   const alg = "HS256";
