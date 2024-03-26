@@ -70,19 +70,20 @@ const SearchExperience = ({mode}) => {
       const getToken = async () => {
         const response = await fetch(`/mintToken?email=${auth_email}`);
         const searchToken = await response.json();
+        console.log(searchToken);
         // console.log(searchToken);
-        if (searchToken.token) {
-          console.log("search token minted");
-          const newSearcher = provideHeadless({
-            token: searchToken.token,
-            experienceKey: "knowledge-base",
-            locale: "en",
-            headlessId: "boards",
-            verticalKey: "boards",
-          });
-          setSearcher(newSearcher);
-          console.log('searcher set')
-        }
+        // if (searchToken.token) {
+        //   console.log("search token minted");
+        //   const newSearcher = provideHeadless({
+        //     token: searchToken.token,
+        //     experienceKey: "knowledge-base",
+        //     locale: "en",
+        //     headlessId: "boards",
+        //     verticalKey: "boards",
+        //   });
+        //   setSearcher(newSearcher);
+        //   console.log('searcher set')
+        // }
       };
       getToken();
     }
