@@ -65,6 +65,8 @@ const SearchExperience = ({mode}) => {
     }
     else {
       console.log("token found on window");
+      console.log(auth);
+      console.log(auth_email);
       const getToken = async () => {
         const response = await fetch(`/mintToken?email=${auth_email}`);
         const searchToken = await response.json();
@@ -79,6 +81,7 @@ const SearchExperience = ({mode}) => {
             verticalKey: "boards",
           });
           setSearcher(newSearcher);
+          console.log('searcher set')
         }
       };
       getToken();
