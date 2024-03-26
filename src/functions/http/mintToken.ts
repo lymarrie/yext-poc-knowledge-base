@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 export default async function mintToken(
   request: SitesHttpRequest
 ): Promise<SitesHttpResponse> {
-  const { email = "" } = request.queryParams; // Extract email from query parameters
+  const email = request.queryParams; // Extract email from query parameters
 
   console.log("Query params: ", request.queryParams);
   console.log("Email: ", email);
