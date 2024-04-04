@@ -64,7 +64,7 @@ const SearchExperience = ({mode}) => {
       getToken();
     }
     else {
-      console.log("token found on window");
+      console.log("token found on window - in production");
       console.log(auth);
       console.log(auth_email);
       const getToken = async () => {
@@ -72,18 +72,18 @@ const SearchExperience = ({mode}) => {
         const searchToken = await response.json();
         console.log(searchToken);
         // console.log(searchToken);
-        // if (searchToken.token) {
-        //   console.log("search token minted");
-        //   const newSearcher = provideHeadless({
-        //     token: searchToken.token,
-        //     experienceKey: "knowledge-base",
-        //     locale: "en",
-        //     headlessId: "boards",
-        //     verticalKey: "boards",
-        //   });
-        //   setSearcher(newSearcher);
-        //   console.log('searcher set')
-        // }
+        if (searchToken.token) {
+          console.log("search token minted");
+          const newSearcher = provideHeadless({
+            token: searchToken.token,
+            experienceKey: "knowledge-base",
+            locale: "en",
+            headlessId: "boards",
+            verticalKey: "boards",
+          });
+          setSearcher(newSearcher);
+          console.log('searcher set')
+        }
       };
       getToken();
     }
