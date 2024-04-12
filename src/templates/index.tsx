@@ -60,7 +60,7 @@ const Index: Template<TemplateRenderProps> = ({
   return (
     <>
       <PageLayout templateData={{ __meta, document }}>
-        <Banner name="Index Page" />
+        <Banner name="Boards" mode={__meta.mode} />
         <SearchExperience mode={__meta.mode}/>
       </PageLayout>
     </>

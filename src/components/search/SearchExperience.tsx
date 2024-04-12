@@ -6,6 +6,7 @@ import {
   SpellCheck,
 } from "@yext/search-ui-react";
 import BoardCard from "./BoardCard";
+import SearchResults from "./SearchResults";
 import { useEffect, useState } from "react";
 import {
   SearchHeadless,
@@ -13,10 +14,10 @@ import {
   provideHeadless,
 } from "@yext/search-headless-react";
 
+
 const SearchExperience = ({mode}) => {
-  const [searcher, setSearcher] = useState<SearchHeadless | undefined>(
-    undefined
-  );
+  const [token, setToken] = useState("");
+  const [searchResult, setSearchResult] = useState(null); // State to hold the search result
 
   useEffect(() => {
     const token = window?.YEXT_TOKENS?.SITE_SEARCH.token;
@@ -48,17 +49,10 @@ const SearchExperience = ({mode}) => {
       const getToken = async () => {
         const response = await fetch(`/mintToken?email=${auth_email}`);
         const searchToken = await response.json();
-        // console.log(searchToken);
         if (searchToken.token) {
           console.log("search token minted");
-          const newSearcher = provideHeadless({
-            token: searchToken.token,
-            experienceKey: "knowledge-base",
-            locale: "en",
-            headlessId: "boards",
-            verticalKey: "boards",
-          });
-          setSearcher(newSearcher);
+          setToken(searchToken.token);
+          console.log(searchToken.token);
         }
       };
       getToken();
@@ -71,7 +65,6 @@ const SearchExperience = ({mode}) => {
         const response = await fetch(`/mintToken?email=${auth_email}`);
         const searchToken = await response.json();
         console.log(searchToken);
-        // console.log(searchToken);
         if (searchToken.token) {
           console.log("search token minted");
           const newSearcher = provideHeadless({
@@ -91,10 +84,13 @@ const SearchExperience = ({mode}) => {
 
   return (
     <>
-      {searcher ? (
-        <SearchHeadlessProvider searcher={searcher}>
-          <SearchInternal />
-        </SearchHeadlessProvider>
+      {token ? (
+          <>
+            {/* <SearchBar placeholder="search for boards" /> */}
+            {/* <SearchInternal token={token} verticalKey="boards"/> */}
+            {/* <SearchInternal token={token} verticalKey="cards"/> */}
+            <SearchInternal token={token} />
+          </>
       ) : (
         <></>
       )}
@@ -102,24 +98,39 @@ const SearchExperience = ({mode}) => {
   );
 };
 
-const SearchInternal = () => {
+interface SearchInternalProps {
+  token?: string
+  verticalKey?: string
+}
+
+const SearchInternal = ( {token, verticalKey}:SearchInternalProps) => {
+  const [searcher, setSearcher] = useState<SearchHeadless | undefined>(
+    undefined
+  );
+  useEffect(() => { 
+    if (token ) {
+      // console.log("search token minted");
+      console.log("sup");
+      const newSearcher = provideHeadless({
+        token: token,
+        experienceKey: "knowledge-base",
+        locale: "en",
+        headlessId: `${verticalKey}-searcher` ? `${verticalKey}-searcher` : 'universal',
+        // verticalKey: verticalKey ? verticalKey : undefined,
+      });
+      setSearcher(newSearcher);
+    }
+  }, [token, verticalKey])
   return (
-    <div className="centered-container">
-      <div className="px-4 py-8">
-        <div className="mx-auto flex max-w-5xl flex-col">
-          <SearchBar placeholder="search for boards" />
-          <SpellCheck />
-          <ResultsCount />
-          <VerticalResults
-            CardComponent={BoardCard}
-            customCssClasses={{
-              verticalResultsContainer: "space-y-3",
-            }}
-          />
-        </div>
-        <Pagination />
-      </div>
-    </div>
+    <>
+      {searcher ? (
+          <SearchHeadlessProvider searcher={searcher}>
+            <SearchResults />     
+          </SearchHeadlessProvider>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 
