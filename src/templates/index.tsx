@@ -3,6 +3,7 @@ import {
   GetHeadConfig,
   GetPath,
   GetRedirects,
+  GetAuthScope,
   HeadConfig,
   Template,
   TemplateConfig,
@@ -17,7 +18,23 @@ import SearchExperience from "../components/search/SearchExperience";
 // End of Imports --------------------------
 
 export const config: TemplateConfig = {
-  name: "index.html",
+  stream: {
+    $id: "Index",
+    filter: {
+      entityIds: ["home"],
+    },
+    fields: [
+      "id",
+      "uid",
+      "meta",
+      "name",
+      "slug",
+      "c_file"
+    ],
+    localization: {
+      locales: ["en"],
+    },
+  },
 };
 
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
