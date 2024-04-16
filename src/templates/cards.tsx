@@ -3,6 +3,7 @@ import {
   GetHeadConfig,
   GetPath,
   GetRedirects,
+  GetAuthScope,
   HeadConfig,
   Template,
   TemplateConfig,
@@ -34,7 +35,8 @@ export const config: TemplateConfig = {
       "meta",
       "name",
       "slug",
-      "c_file"
+      "c_file",
+      "externalAuthorizedIdentities",
     ],
     localization: {
       locales: ["en"],
@@ -45,6 +47,16 @@ export const config: TemplateConfig = {
 export const getPath: GetPath<TemplateProps> = ({ document }) => {
   return document.slug;
 };
+
+export const getAuthScope: GetAuthScope<TemplateProps> = ({document}) => {
+  // A. Checks if user's role matches any of the roles defined on the entity
+  const rolesCheck = `(claims.custom_roles.exists(role => document.externalAuthorizedIdentities.exists(r => r == role)))`;
+  // B. Checks if user's email ends in @yext.com
+  const emailCheck = `claims.email.endsWith("@yext.com")`;
+  // Checks if A AND B are both true
+  return `${rolesCheck} && ${emailCheck}`;
+}
+
 
 export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   document,
